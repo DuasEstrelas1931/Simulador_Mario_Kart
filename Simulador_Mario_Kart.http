@@ -1,0 +1,6 @@
+@Simulador_Mario_Kart_HostAddress = http://localhost:5014
+
+GET {{Simulador_Mario_Kart_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
