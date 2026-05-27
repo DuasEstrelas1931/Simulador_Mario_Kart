@@ -1,8 +1,9 @@
 # 🏎️ Mario Kart Race Simulator — Full Stack
 
-<img src="./mario-kart-frontend/public/chars/header.gif" alt="Mario Kart" width="220">
+<img src="./wwwroot/chars/header.gif" alt="Mario Kart" width="220">
 
 Simulador de corrida estilo Mario Kart com:
+
 - **Backend**: ASP.NET Core 8 + MySQL + JWT + Swagger
 - **Frontend**: React + Framer Motion (animações em tempo real)
 - **Banco**: MySQL com Entity Framework Core (Code First)
@@ -11,128 +12,146 @@ Baseado no projeto original em Node.js, recriado com back-end completo e front-e
 
 ---
 
-## 👥 Personagens
+# 🚀 Tecnologias Utilizadas
+
+## Backend
+- ASP.NET Core 8
+- Entity Framework Core
+- MySQL
+- JWT Authentication
+- Swagger/OpenAPI
+- BCrypt
+
+## Frontend
+- React
+- Vite
+- Framer Motion
+- Axios
+- CSS3
+
+---
+
+# 👥 Personagens
 
 <table>
   <tr>
     <td align="center">
-      <img src="./mario-kart-frontend/public/chars/mario.gif" width="60" alt="Mario">
+      <img src="./wwwroot/chars/mario.gif" width="60" alt="Mario">
       <br><b>Mario</b>
       <br>💨 Vel: 4 &nbsp; 🎯 Man: 3 &nbsp; 💪 Pow: 3
     </td>
+
     <td align="center">
-      <img src="./mario-kart-frontend/public/chars/luigi.gif" width="60" alt="Luigi">
+      <img src="./wwwroot/chars/luigi.gif" width="60" alt="Luigi">
       <br><b>Luigi</b>
-      <br>💨 Vel: 3 &nbsp; 🎯 Man: 4 &nbsp; 💪 Pow: 4
+      <br>💨 Vel: 3 &nbsp; 🎯 Man: 4 &nbsp; 💪 Pow: 3
     </td>
+
     <td align="center">
-      <img src="./mario-kart-frontend/public/chars/yoshi.gif" width="60" alt="Yoshi">
+      <img src="./wwwroot/chars/yoshi.gif" width="60" alt="Yoshi">
       <br><b>Yoshi</b>
-      <br>💨 Vel: 2 &nbsp; 🎯 Man: 4 &nbsp; 💪 Pow: 3
+      <br>💨 Vel: 4 &nbsp; 🎯 Man: 4 &nbsp; 💪 Pow: 2
     </td>
+
     <td align="center">
-      <img src="./mario-kart-frontend/public/chars/bowser.gif" width="60" alt="Bowser">
+      <img src="./wwwroot/chars/bowser.gif" width="60" alt="Bowser">
       <br><b>Bowser</b>
-      <br>💨 Vel: 5 &nbsp; 🎯 Man: 2 &nbsp; 💪 Pow: 5
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="./mario-kart-frontend/public/chars/peach.gif" width="60" alt="Peach">
-      <br><b>Peach</b>
-      <br>💨 Vel: 3 &nbsp; 🎯 Man: 4 &nbsp; 💪 Pow: 2
-    </td>
-    <td align="center">
-      <img src="./mario-kart-frontend/public/chars/dk.gif" width="60" alt="Donkey Kong">
-      <br><b>Donkey Kong</b>
       <br>💨 Vel: 2 &nbsp; 🎯 Man: 2 &nbsp; 💪 Pow: 5
     </td>
+  </tr>
+
+  <tr>
     <td align="center">
-      <img src="./mario-kart-frontend/public/chars/toad.gif" width="60" alt="Toad">
+      <img src="./wwwroot/chars/peach.gif" width="60" alt="Peach">
+      <br><b>Peach</b>
+      <br>💨 Vel: 3 &nbsp; 🎯 Man: 3 &nbsp; 💪 Pow: 4
+    </td>
+
+    <td align="center">
+      <img src="./wwwroot/chars/donkeykong.gif" width="60" alt="Donkey Kong">
+      <br><b>Donkey Kong</b>
+      <br>💨 Vel: 2 &nbsp; 🎯 Man: 3 &nbsp; 💪 Pow: 5
+    </td>
+
+    <td align="center">
+      <img src="./wwwroot/chars/toad.gif" width="60" alt="Toad">
       <br><b>Toad</b>
       <br>💨 Vel: 5 &nbsp; 🎯 Man: 4 &nbsp; 💪 Pow: 1
     </td>
+
     <td></td>
   </tr>
 </table>
 
 ---
 
-## 🕹️ Regras & Mecânicas
+# 🕹️ Regras & Mecânicas
 
-A lógica do jogo é fiel ao projeto Node.js original:
+A lógica do jogo é inspirada no Mario Kart clássico:
 
 | Bloco | Atributo usado | Resultado |
 |---|---|---|
-| **RETA** | Velocidade | Dado + Vel → quem pontua mais ganha 1 pt |
-| **CURVA** | Manobrabilidade | Dado + Man → quem pontua mais ganha 1 pt |
-| **CONFRONTO** | Poder | Dado + Pow → quem perde, perde 1 pt (mín 0) |
-
-- A cada rodada, um bloco é sorteado aleatoriamente
-- Ao final, vence quem acumulou **mais pontos**
-
----
-
-## 📁 Estrutura do Projeto
-
-```
-mario-kart-race/
-├── mario-kart-api/              ← Backend ASP.NET Core 8
-│   ├── Controllers/
-│   │   ├── AuthController.cs    ← Login / Registro + JWT
-│   │   ├── RaceController.cs    ← Iniciar corrida
-│   │   └── LeaderboardController.cs
-│   ├── Models/
-│   │   ├── User.cs
-│   │   └── Race.cs
-│   ├── DTOs/Dtos.cs
-│   ├── Data/AppDbContext.cs     ← MySQL com EF Core
-│   ├── Services/RaceEngineService.cs  ← Lógica do jogo
-│   ├── Program.cs               ← Config JWT + Swagger + CORS
-│   ├── appsettings.json
-│   └── MarioKartAPI.csproj
-│
-└── mario-kart-frontend/         ← Frontend React + Framer Motion
-    ├── public/
-    │   └── chars/               ← ⬅️ COLOQUE OS GIFs AQUI
-    │       ├── mario.gif
-    │       ├── luigi.gif
-    │       ├── yoshi.gif
-    │       ├── bowser.gif
-    │       ├── peach.gif
-    │       ├── dk.gif
-    │       ├── toad.gif
-    │       └── header.gif
-    ├── src/
-    │   └── App.jsx
-    └── package.json
-```
+| 🏁 RETA | Velocidade | Dado + Speed |
+| 🔄 CURVA | Manobrabilidade | Dado + Maneuverability |
+| ⚠️ CONFRONTO | Poder | Dado + Power |
+| 🟤 LAMA | Poder reduzido | Power / 2 |
+| ❄️ GELO | Controle avançado | Maneuverability x1.5 |
+| 🌋 VULCÃO | Terreno extremo | Bonus de força |
+| 🌊 ÁGUA | Controle aquático | Bonus de manobra |
+| 🌈 RAINBOW ROAD | Pista especial | Speed + Maneuverability |
 
 ---
 
-## 🖼️ Como Colocar as Imagens (GIFs)
+# ⭐ Vantagens Especiais
 
-Os GIFs dos personagens devem ficar em:
-
-```
-mario-kart-frontend/public/chars/
-```
-
-### Passo a passo:
-1. Crie a pasta `public/chars/` dentro de `mario-kart-frontend/`
-2. Copie os arquivos com **exatamente esses nomes**:
-
-| Arquivo | Personagem |
+| Personagem | Vantagem |
 |---|---|
-| `mario.gif` | Mario |
-| `luigi.gif` | Luigi |
-| `yoshi.gif` | Yoshi |
-| `bowser.gif` | Bowser |
-| `peach.gif` | Peach |
-| `dk.gif` | Donkey Kong |
-| `toad.gif` | Toad |
-| `header.gif` | Logo do header |
+| 🐢 Bowser | +5 no VULCÃO |
+| 🌸 Peach | +4 no GELO |
+| 🦕 Yoshi | +4 na ÁGUA |
+| 🦍 Donkey Kong | +5 na LAMA |
+| 🍄 Mario | +3 na RAINBOW ROAD |
+| 💚 Luigi | +3 nas CURVAS |
 
+Além disso:
+
+- 🎲 Tirar 6 no dado ativa bônus crítico
+- 🏁 Cada volta atualiza o ranking em tempo real
+- 📊 Sistema de leaderboard global
+- 💾 Corridas ficam salvas no banco MySQL
+
+---
+
+# 📁 Estrutura do Projeto
+
+```bash
+Simulador_Mario_Kart/
+│
+├── Simulador_Mario_Kart.API/
+│   ├── Controllers/
+│   ├── DTOs/
+│   ├── Data/
+│   ├── Models/
+│   ├── Services/
+│   ├── wwwroot/
+│   │   └── chars/
+│   │       ├── mario.gif
+│   │       ├── luigi.gif
+│   │       ├── yoshi.gif
+│   │       ├── bowser.gif
+│   │       ├── peach.gif
+│   │       ├── dk.gif
+│   │       ├── toad.gif
+│   │       └── header.gif
+│   ├── Program.cs
+│   └── appsettings.json
+│
+└── mario-kart-frontend/
+    ├── src/
+    ├── package.json
+    └── vite.config.js
+  ```
+    
 > O Vite (bundler do React) serve tudo que está em `/public` diretamente.
 > Então `public/chars/mario.gif` fica acessível como `/chars/mario.gif` no browser.
 
@@ -184,8 +203,8 @@ dotnet ef database update
 dotnet run
 ```
 
-✅ API em: `http://localhost:5000`
-✅ Swagger em: `http://localhost:5000/` (raiz)
+✅ API em: `https://localhost:7115/api`
+✅ Swagger em: `https://localhost:7115/swagger/index.html` (raiz)
 
 ---
 
@@ -240,3 +259,69 @@ framer-motion
 ```
 
 Instalar com: `npm install`
+
+## 🎮 Funcionalidades
+
+✅ Login JWT
+✅ Cadastro de usuários
+✅ Corrida em tempo real
+✅ Sistema de voltas
+✅ Ranking global
+✅ Leaderboard
+✅ Sistema de vantagens especiais
+✅ Animações com Framer Motion
+✅ React + ASP.NET Core
+✅ Persistência no MySQL
+✅ Swagger UI
+✅ Sistema de posições
+✅ Histórico de corridas
+
+## 🤝 Contribuindo
+1. Faça um Fork do projeto
+2. Crie uma branch:
+```
+git checkout -b feature/AmazingFeature
+```
+3. Commit suas mudanças:
+```
+git commit -m 'Add some AmazingFeature'
+```
+4. Push para a branch:
+```
+git push origin feature/AmazingFeature
+```
+5. Abra um Pull Request🚀
+
+
+## 🤝 Contribuindo
+Faça um Fork do projeto
+Crie sua Feature Branch (git checkout -b feature/AmazingFeature)
+Commit suas mudanças (git commit -m 'Add some AmazingFeature')
+Push para a Branch (git push origin feature/AmazingFeature)
+Abra um Pull Request
+
+## 📝 Licença
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+## 👨‍💻 Contato do Autor
+Ricardo Amor
+GitHub: @DuasEstrelas1931
+LinkedIn: Ricardo Amor Divino
+Email: ricardo.amor@exemplo.com
+
+## 🙏 Agradecimentos
+Comunidade .NET
+React Team
+MySQL
+Todos os contribuidores e usuários do projeto
+EX: 
+Programa Ford <Enter>
+Senai Cimatec
+Professor Marcelo
+
+## ⭐ Demonstração
+
+🏎️ Simulação dinâmica de corridas Mario Kart
+🔥 Backend robusto com ASP.NET Core 8
+🎨 Frontend animado com React + Framer Motion
+📊 Ranking persistido em MySQL

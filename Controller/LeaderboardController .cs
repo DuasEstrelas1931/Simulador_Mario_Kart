@@ -20,35 +20,45 @@ namespace Simulador_Mario_Kart.Controller
         [ProducesResponseType(typeof(List<LeaderboardEntryDto>), 200)]
         public async Task<IActionResult> GetLeaderboard([FromQuery] int top = 10)
         {
-            var results = await _db.RaceResults
+            var raceResults = await _db.RaceResults
                 .Include(r => r.User)
+                .ToListAsync();
+
+            var results = raceResults
                 .GroupBy(r => new { r.UserId, r.User.Username })
-                .Select(g => new LeaderboardEntryDto(
-                    0,
-                    g.Key.UserId,
-                    g.Key.Username,
-                    g.OrderByDescending(x => x.TotalPoints)
-                     .Select(x => x.CharacterName).First(),
-                    g.OrderByDescending(x => x.TotalPoints)
-                     .Select(x => x.CharacterEmoji).First(),
-                    g.Sum(x => x.Wins),
-                    g.Count(),
-                    g.Count() == 0 ? 0 : Math.Round((double)g.Sum(x => x.Wins) / g.Count() * 100, 1),
-                    g.Min(x => x.FinalPosition),
-                    g.Sum(x => x.TotalPoints)
-                ))
+                .Select(g =>
+                {
+                    var favorite = g
+                        .OrderByDescending(x => x.TotalPoints)
+                        .First();
+
+                    return new LeaderboardEntryDto(
+                        0,
+                        g.Key.UserId,
+                        g.Key.Username,
+                        favorite.CharacterName,
+                        favorite.CharacterEmoji,
+                        g.Sum(x => x.Wins),
+                        g.Count(),
+                        g.Count() == 0
+                            ? 0
+                            : Math.Round((double)g.Sum(x => x.Wins) / g.Count() * 100, 1),
+                        g.Min(x => x.FinalPosition),
+                        g.Sum(x => x.TotalPoints)
+                    );
+                })
                 .OrderByDescending(x => x.TotalWins)
                 .ThenByDescending(x => x.TotalPoints)
                 .Take(top)
-                .ToListAsync();
+                .ToList();
 
-            // Add rank
-            var ranked = results.Select((entry, i) =>
-                entry with { Rank = i + 1 }
-            ).ToList();
+            var ranked = results
+                .Select((entry, i) => entry with { Rank = i + 1 })
+                .ToList();
 
             return Ok(ranked);
         }
+        
 
         /// <summary>Histórico de corridas de um usuário específico.</summary>
         [HttpGet("user/{userId}")]

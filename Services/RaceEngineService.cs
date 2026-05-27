@@ -9,7 +9,7 @@ namespace Simulador_Mario_Kart.Services
     /// </summary>
     public class RaceEngineService
     {
-        private readonly Random _rng = new();
+        private static readonly Random _rng = Random.Shared;
 
         // Characters with their base stats
         private static readonly Dictionary<string, CharacterStats> Characters = new()
@@ -78,7 +78,17 @@ namespace Simulador_Mario_Kart.Services
 
         private List<LapResultDto> SimulateLap(int lapNumber, List<PlayerState> players)
         {
-            var blocks = new[] { "STRAIGHT", "CURVE", "OBSTACLE" };
+            var blocks = new[]
+            {
+                "STRAIGHT",
+                "CURVE",
+                "OBSTACLE",
+                "MUD",
+                "ICE",
+                "VOLCANO",
+                "WATER",
+                "RAINBOW"
+            };
 
             foreach (var player in players)
             {
@@ -89,12 +99,79 @@ namespace Simulador_Mario_Kart.Services
                 int stat = blockType switch
                 {
                     "STRAIGHT" => player.Stats.Speed,
+
                     "CURVE" => player.Stats.Maneuverability,
+
                     "OBSTACLE" => player.Stats.Power,
+
+                    "MUD" => player.Stats.Power / 2,
+
+                    "ICE" => (int)Math.Round(player.Stats.Maneuverability * 1.5),
+
+                    "VOLCANO" => player.Stats.Power + 2,
+
+                    "WATER" => player.Stats.Maneuverability + 1,
+                        
+                    "RAINBOW" => (player.Stats.Speed + player.Stats.Maneuverability) / 2,
+
                     _ => 3
                 };
 
                 blockScore = die + stat;
+
+                // 🌋 Bowser domina vulcão
+                if (
+                    blockType == "VOLCANO" &&
+                    player.CharacterName == "Bowser"
+                )
+                {
+                    blockScore += 5;
+                }
+
+                // ❄️ Peach domina gelo
+                if (
+                    blockType == "ICE" &&
+                    player.CharacterName == "Peach"
+                )
+                {
+                    blockScore += 4;
+                }
+
+                // 🌊 Yoshi domina água
+                if (
+                    blockType == "WATER" &&
+                    player.CharacterName == "Yoshi"
+                )
+                {
+                    blockScore += 4;
+                }
+
+                // 🟤 Donkey Kong domina lama
+                if (
+                    blockType == "MUD" &&
+                    player.CharacterName == "DonkeyKong"
+                )
+                {
+                    blockScore += 5;
+                }
+
+                // 🌈 Mario ganha bônus na Rainbow Road
+                if (
+                    blockType == "RAINBOW" &&
+                    player.CharacterName == "Mario"
+                )
+                {
+                    blockScore += 3;
+                }
+
+                // 🔄 Luigi ganha bônus em curvas
+                if (
+                    blockType == "CURVE" &&
+                    player.CharacterName == "Luigi"
+                )
+                {
+                    blockScore += 3;
+                }
 
                 // Special power roll
                 if (die == 6)
